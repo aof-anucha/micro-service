@@ -7,10 +7,10 @@ export class AppController {
   private logger;
   constructor(private readonly appService: AppService) { this.logger = new Logger('MathService'); }
 
-  @MessagePattern({ cmd: 'get/user' })
-  getHello(): string {
-    return this.appService.getHello();
-  }
+  // @MessagePattern({ cmd: 'get/user' })
+  // getHello(): string {
+  //   return this.appService.getHello();
+  // }
   // @MessagePattern({ cmd: 'sum' })
   // accumulate(data: number[]): number {
   //   const result = (data || []).reduce((a, b) => a + b);

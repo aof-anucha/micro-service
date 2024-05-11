@@ -16,23 +16,23 @@ export class AppController {
     return this.appService.getPayment();
   }
 
-  @Get('order')
-  getOrder(): Observable<string> {
-    return this.appService.getOrder();
-  }
+  // @Get('order')
+  // getOrder(): Observable<string> {
+  //   return this.appService.getOrder();
+  // }
 
   @Get('cart')
   getCart(): Observable<string> {
     return this.appService.getCart();
   }
 
-  @Get('product')
-  getProduct(): Observable<string> {
-    return this.appService.getProduct();
-  }
+  // @Get('product')
+  // getProduct(): Observable<string> {
+  //   return this.appService.getProduct();
+  // }
   // ------------------------------------------------------ USER SERVICE ---------------------------------------------------------
 
-  @Get('user')
+  @Get('users')
   getalluser(): Observable<any> {
     return this.appService.getalluser();
   }
@@ -69,9 +69,65 @@ export class AppController {
 
   // ------------------------------------------------------ PRODUCT SERVICE ---------------------------------------------------------
 
+  @Get('products')
+  getallproduct(): Observable<any> {
+    return this.appService.getallproduct();
+  }
+
+  @Get('product/:id')
+  getProduct(@Param('id') id): Observable<any> {
+    console.log(id)
+    return this.appService.getProduct(id);
+  }
+
+  @Post('product')
+  addProduct(@Body() userData: any) {
+    console.log(userData)
+    return this.appService.addProduct(userData)
+  }
+
+  @Put('product/:id')
+  editProduct(@Param('id') id: string,@Body() userData: any) {
+    console.log(userData)
+    return this.appService.editProduct(id,userData)
+  }
+
+  @Delete('product/:id')
+  deleteProduct(@Param('id') id) {
+    console.log()
+    return this.appService.deleteProduct(id)
+  }
+
   // ------------------------------------------------------ ORDER SERVICE ---------------------------------------------------------
 
+  @Get('orders')
+  getallorders(): Observable<any> {
+    return this.appService.getallorders();
+  }
 
+  @Get('order/:id')
+  getOrder(@Param('id') id): Observable<any> {
+    console.log(id)
+    return this.appService.getOrder(id);
+  }
+
+  @Post('order')
+  addOrder(@Body() userData: any) {
+    console.log(userData)
+    return this.appService.addOrder(userData)
+  }
+
+  @Put('order/:id')
+  editOrder(@Param('id') id: string,@Body() userData: any) {
+    console.log(userData)
+    return this.appService.editOrder(id,userData)
+  }
+
+  @Delete('order/:id')
+  deleteOrder(@Param('id') id) {
+    console.log()
+    return this.appService.deleteOrder(id)
+  }
 
 
 }

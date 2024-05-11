@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-
-  private users:{ [key: string]: any } = [{id:1, name:'aof'},{id:2, name:'pat'},{id:3, name:'gus'}];
-  private new_id:number = this.users.length;
+  private logger = new Logger('MathService');
+  private users: { [key: string]: any } = [{ id: 1, name: 'aof' }, { id: 2, name: 'pat' }, { id: 3, name: 'gus' }];
+  private new_id: number = this.users.length;
   getHello(): string {
     return 'Hello World! This is a Uesr Service';
   }
@@ -15,12 +15,15 @@ export class AppService {
 
   getUser(data) {
     const user = this.users.filter(user => user.id === data);
-    return user
+    if (user.length === 0) {
+      return "User not found";
+    }
+    return user;
   }
 
   addUser(data) {
     const new_user: { [key: string]: any } = {};
-    this.new_id +=1
+    this.new_id += 1
     new_user.id = this.new_id
     new_user.name = data.name
     this.users.push(new_user)
@@ -34,24 +37,22 @@ export class AppService {
       this.users[index].name = data.userData.name;
       return this.users[index];
     }
-    return null;
+    return "User not found";
   }
 
 
-  deleteUser(data){
+  deleteUser(data) {
     const index = this.users.findIndex(user => user.id === data);
     if (index !== -1) {
       this.users.splice(index, 1);
       return this.users;
     }
-    return null;
+    return "User not found";
   }
-
-
 
   accumulate(data: number[]): number {
     const result = (data || []).reduce((a, b) => a + b);
-    // this.logger.log('accumulate has call result : ' + result);
+    this.logger.log('accumulate has call result : ' + result);
     return result;
   }
 }
