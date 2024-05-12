@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
+  private logger = new Logger('ProductService');
+
   private products:{ [key: string]: any } = [
   {id:1, name:'Phone', category:"Electronics"},
   {id:2, name:'Chair', category:"Furniture"},
@@ -20,29 +22,33 @@ export class AppService {
   getProduct(data) {
     const product = this.products.filter(product => product.id === data);
     if (product.length === 0) {
+      this.logger.log("Product not found");
       return "Product not found";
     }
     return product
   }
 
   addProduct(data) {
-    const new_user: { [key: string]: any } = {};
+    const new_product: { [key: string]: any } = {};
     this.new_id +=1
-    new_user.id = this.new_id
-    new_user.name = data.name
-    new_user.category = data.category
-    this.products.push(new_user)
-    return new_user
+    new_product.id = this.new_id
+    new_product.name = data.name
+    new_product.category = data.category
+    this.products.push(new_product)
+    this.logger.log("successfully added product");
+    return new_product
   }
 
   editProduct(data) {
     const index = this.products.findIndex(user => user.id === (+data.id));
-    console.log(data)
+  
     if (index !== -1) {
       this.products[index].name = data.userData.name;
       this.products[index].category = data.userData.category;
+      this.logger.log("successfully edited product");
       return this.products[index];
     }
+    this.logger.log("Product not found");
     return "Product not found";
   }
 
@@ -51,16 +57,11 @@ export class AppService {
     const index = this.products.findIndex(user => user.id === data);
     if (index !== -1) {
       this.products.splice(index, 1);
+      this.logger.log("successfully deleted product");
       return this.products;
     }
+    this.logger.log("Product not found");
     return "Product not found";
   }
 
-
-
-  accumulate(data: number[]): number {
-    const result = (data || []).reduce((a, b) => a + b);
-    // this.logger.log('accumulate has call result : ' + result);
-    return result;
-  }
 }

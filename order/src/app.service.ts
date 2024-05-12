@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
+  private logger = new Logger('OrderService');
+
   private orders: { [key: string]: any } = [
     { order_id: 1, order_date: '05/11/2024', userID: 1, order_details:{detail1:"detail1",detail2:"detail2"} },
     { order_id: 2, order_date: '06/10/2024', userID: 1, order_details:{detail1:"detail1",detail2:"detail2"} },
@@ -19,6 +21,7 @@ export class AppService {
   getProduct(data) {
     const order = this.orders.filter(order => order.order_id === data);
     if (order.length === 0) {
+      this.logger.log("Order not found");
       return "Order not found";
     }
     return order
@@ -34,6 +37,7 @@ export class AppService {
     new_user.order_details.detail1 = data.order_details.detail1
     new_user.order_details.detail2 = data.order_details.detail2
     this.orders.push(new_user)
+    this.logger.log("successfully added order");
     return new_user
   }
 
@@ -45,8 +49,10 @@ export class AppService {
       this.orders[index].userID = new_data.userID;
       this.orders[index].order_details.detail1 = new_data.order_details.detail1;
       this.orders[index].order_details.detail2 = new_data.order_details.detail2;
+      this.logger.log("successfully edited order");
       return this.orders[index];
     }
+    this.logger.log("Order not found");
     return "Order not found";
   }
 
@@ -55,16 +61,11 @@ export class AppService {
     const index = this.orders.findIndex(user => user.order_id === data);
     if (index !== -1) {
       this.orders.splice(index, 1);
+      this.logger.log("successfully deleted order");
       return this.orders;
     }
+    this.logger.log("Order not found");
     return "Order not found";
   }
 
-
-
-  accumulate(data: number[]): number {
-    const result = (data || []).reduce((a, b) => a + b);
-    // this.logger.log('accumulate has call result : ' + result);
-    return result;
-  }
 }

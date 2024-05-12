@@ -13,7 +13,7 @@ export class AppController {
 
   @MessagePattern({ cmd: 'getproduct' })
   getProduct(data) {
-    console.log(data)
+
     return this.appService.getProduct(+data)
   }
 
@@ -24,13 +24,13 @@ export class AppController {
 
   @MessagePattern({ cmd: 'Add_Product' })
   addProduct(data) {
-    console.log(data)
+
     return this.appService.addProduct(data)
   }
 
   @MessagePattern({ cmd: 'Edit_Product' })
   editProduct(data) {
-    console.log(data)
+
     return this.appService.editProduct(data)
   }
 
